@@ -50,7 +50,7 @@ I have used the maven failsafe plugin to run the test along with the serenity ma
 				</executions>
 			</plugin>
       
-<h1>This the My docker compose setup</h1>
+<h1>Docker compose setup</h1>
 
 ``` 
 selenium-hub:
