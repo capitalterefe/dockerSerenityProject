@@ -1,4 +1,4 @@
-# dockerSerenityProject
+# Selenium Grid With Docker Container
 Docker selenium project
 This project designed as an experment project to run tests in parallel in a docker container in google cloud.
 I have used the maven failsafe plugin to run the test along with the serenity maven plugin, here the three plugins used
@@ -50,16 +50,16 @@ I have used the maven failsafe plugin to run the test along with the serenity ma
 				</executions>
 			</plugin>
 			
-<h1>creating Docker Network</h1>
+<h1>Creating Docker Network</h1>
 Finding out the IP address of the host is a key part in to avoid any conflict with other grids running on same machine. So in order to have a fixed set of IPs for both host and containers you can set a docker network.
 
 ```docker network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 docnet```
 
-Now each container can connect to the host under the fixed IP 192.168.0.1.
+Now each container can connect to the host under the fixed IP 192.168.0.1
 
-Now Each conntainer will be used 'docnet' network
+Now Each conntainer will use 'docnet' network as you can see on the docker-compose.yml file
       
-<h1>Docker compose setup</h1>
+<h1>Set up docker-compose.yml</h1>
 
 ``` 
 version: '2'
