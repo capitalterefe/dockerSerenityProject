@@ -49,6 +49,15 @@ I have used the maven failsafe plugin to run the test along with the serenity ma
 					</execution>
 				</executions>
 			</plugin>
+			
+<h1>creating Docker Network</h1>
+Finding out the IP address of the host is a key part in to avoid any conflict with other grids running on same machine. So in order to have a fixed set of IPs for both host and containers you can set a docker network.
+
+```docker network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 docnet```
+
+Now each container can connect to the host under the fixed IP 192.168.0.1.
+
+Now Each conntainer will be used 'docnet' network
       
 <h1>Docker compose setup</h1>
 
