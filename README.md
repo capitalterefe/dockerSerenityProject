@@ -40,7 +40,7 @@ maven failsafe plugin used to for parallel execution and For Reporting used the 
 					</execution>
 				</executions>
 			</plugin>
-
+```
 			
 <h1>Creating Docker Network</h1>
 Finding out the IP address of the host is a key part in to avoid any conflict with other grids running on same machine. So in order to have a fixed set of IPs for both host and containers you can set a docker network.
