@@ -1,22 +1,13 @@
 # Selenium Grid With Docker Container
 Docker selenium project
-This project designed as an experment project to run tests in parallel in a docker container in google cloud.
-I have used the maven failsafe plugin to run the test along with the serenity maven plugin, here the three plugins used
-
-<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.20</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-
-			</plugin>
-			<plugin>
+This project designed as an experment project to run tests in parallel in a docker container in GCP.
+maven failsafe plugin used to for parallel execution and For Reporting used the serenity maven plugin
+```
+                   	<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.20</version>
 				<configuration>
-					<forkCount>4</forkCount>
+					<forkCount>15</forkCount>
 					<reuseForks>true</reuseForks>
 					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 					<includes>
@@ -38,7 +29,7 @@ I have used the maven failsafe plugin to run the test along with the serenity ma
 			<plugin>
 				<groupId>net.serenity-bdd.maven.plugins</groupId>
 				<artifactId>serenity-maven-plugin</artifactId>
-				<version>1.5.3</version>
+				<version>${serenity.version}</version>
 				<executions>
 					<execution>
 						<id>serenity-reports</id>
@@ -49,6 +40,7 @@ I have used the maven failsafe plugin to run the test along with the serenity ma
 					</execution>
 				</executions>
 			</plugin>
+	```
 			
 <h1>Creating Docker Network</h1>
 Finding out the IP address of the host is a key part in to avoid any conflict with other grids running on same machine. So in order to have a fixed set of IPs for both host and containers you can set a docker network.
