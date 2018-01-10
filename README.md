@@ -53,25 +53,52 @@ I have used the maven failsafe plugin to run the test along with the serenity ma
 <h1>Docker compose setup</h1>
 
 ``` 
-selenium-hub:
-    image: capitalt/selenium-hub-google-cloud:v1.0
-    ports:
-      - "4444:4444"
+version: '2'
+networks:
+ docnet:
+    external: true
 
-chrome:
-    image: capitalt/selenium-chrome-node-debug-google-cloud:v1.0
-    links:
-      - selenium-hub:hub
-    volumes:
-      - /dev/shm:/dev/shm # Mitigates the Chromium issue described at https://code.google.com/p/chromium/issues/detail?id=519952
-    ports:
-      - 5900
-firefox:
-    image: capitalt/selenium-firefox-node-debug-google-cloud:v1.0
-    links:
-      - selenium-hub:hub
-    ports:
-      - 5900
+services:
+ selenium-hub:
+        image: capitalt/selenium-hub:3.6.0
+        environment:
+         - GRID_BROWSER_TIMEOUT=60000
+         - GRID_TIMEOUT=60000
+         - GRID_MAX_SESSION=50
+         - GRID_MAX_INSTANCES=3
+         - GRID_CLEAN_UP_CYCLE=60000
+         - GRID_UNREGISTER_IF_STILL_DOWN_AFTER=180000
+         - GRID_NEW_SESSION_WAIT_TIMEOUT=60000
+        ports:
+          - 4444
+        networks:
+         - docnet
+ chrome:
+        image: capitalt/selenium-node-chrome-debug:3.6.0
+        depends_on:
+         - selenium-hub
+        environment:
+         - HUB_PORT_4444_TCP_ADDR=selenium-hub
+         - HUB_PORT_4444_TCP_PORT=4444
+         - NODE_MAX_SESSION=1
+        ports:
+         - 5900
+        networks:
+         - docnet
+
+ firefox:
+        image: capitalt/selenium-node-firefox-debug:3.6.0
+        depends_on:
+         - selenium-hub
+        environment:
+         - HUB_PORT_4444_TCP_ADDR=selenium-hub
+         - HUB_PORT_4444_TCP_PORT=4444
+         - NODE_MAX_SESSION=1
+        ports:
+         - 5900
+        networks:
+         - docnet
+
 ```
 you can run docker compose using 
 >docker-compose up --scale firefox=5 chrome=5
